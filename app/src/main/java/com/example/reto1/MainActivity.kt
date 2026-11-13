@@ -1,7 +1,10 @@
 package com.example.reto1
 
 import android.os.Bundle
+import android.widget.Button
 import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.RadioGroup
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -55,5 +58,23 @@ class MainActivity : AppCompatActivity() {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
+
+        // --- FUNCIONALIDAD 3: BOTÓN GUARDAR + EDITTEXT + RADIOGROUP ---
+        val editTextNombre = findViewById<EditText>(R.id.editTextNombre)
+        val rgModalidad = findViewById<RadioGroup>(R.id.rgModalidad)
+        val btnGuardar1 = findViewById<Button>(R.id.btnGuardar1)
+
+        btnGuardar1.setOnClickListener {
+            val nombre = editTextNombre.text.toString().ifBlank { "Sin nombre" }
+
+            val modalidad = when (rgModalidad.checkedRadioButtonId) {
+                R.id.rbPresencial -> "Presencial"
+                R.id.rbOnline -> "Online"
+                R.id.rbMixta -> "Mixta"
+                else -> "No seleccionada"
+            }
+
+            tvResultado.text = "Alumno: $nombre | Modalidad: $modalidad | ${tvNivel.text}"
+        }
     }
 }
